@@ -7,4 +7,5 @@ def insertion(numbers):
             else:
                 numbers[tmp], numbers[j] = numbers[j], numbers[tmp]
                 tmp = tmp - 1
+    return numbers
 
