@@ -5,7 +5,6 @@ import math
 
 MAX_INT = sys.maxsize
 
-
 def constant_array(n, value=None):
     if value is None:
         value = random.randrange(MAX_INT)

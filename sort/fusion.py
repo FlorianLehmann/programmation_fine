@@ -1,5 +1,3 @@
-
-
 def fusion(lst):
     length = len(lst)
     # Si la liste contient 0 ou 1 élément, alors elle est naturellement triée
