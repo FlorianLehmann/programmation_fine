@@ -16,7 +16,31 @@ def find_pivot_by_median_of_3_values(lst, low, high):
 	return lst[high]
 
 
-pivot_functions = [find_pivot, find_pivot_by_median_of_3_values]
+def find_pivot_by_median_of_5_values(lst, low, high):
+	quartiles = [low + (high - low) * i // 4 for i in range(5)]
+	for i, x in enumerate(quartiles):
+		for j, y in enumerate(quartiles[i:], i):
+			if lst[y] < lst[x]:
+				lst[x], lst[y] = lst[y], lst[x]
+	return lst[high]
+
+
+def find_pivot_by_median_of_2_times_n_plus_1_values(lst, low, high, n=3):
+	m = 2 * n + 1
+	quartiles = [low + (high - low) * i // (m - 1) for i in range(m)]
+	for i, x in enumerate(quartiles):
+		for j, y in enumerate(quartiles[i:], i):
+			if lst[y] < lst[x]:
+				lst[x], lst[y] = lst[y], lst[x]
+	return lst[high]
+
+
+pivot_functions = [
+	find_pivot,
+	find_pivot_by_median_of_3_values,
+	find_pivot_by_median_of_5_values,
+	find_pivot_by_median_of_2_times_n_plus_1_values
+]
 
 
 def partition(lst, low, high, pivot):
