@@ -2,18 +2,18 @@ from . import insertion
 
 
 def find_pivot(lst, low, high):
-	return lst[high]
+	return high
 
 
 def find_pivot_by_median_of_3_values(lst, low, high):
-	mid = (low + high) // 2
+	mid = low + (high - low) // 2
 	if lst[mid] < lst[low]:
 		lst[low], lst[mid] = lst[mid], lst[low]
 	if lst[high] < lst[low]:
 		lst[low], lst[high] = lst[high], lst[low]
 	if lst[mid] < lst[high]:
-		lst[low], lst[high] = lst[high], lst[low]
-	return lst[high]
+		lst[mid], lst[high] = lst[high], lst[mid]
+	return high
 
 
 def find_pivot_by_median_of_5_values(lst, low, high):
@@ -22,7 +22,7 @@ def find_pivot_by_median_of_5_values(lst, low, high):
 		for j, y in enumerate(quartiles[i:], i):
 			if lst[y] < lst[x]:
 				lst[x], lst[y] = lst[y], lst[x]
-	return lst[high]
+	return high
 
 
 def find_pivot_by_median_of_2_times_n_plus_1_values(lst, low, high, n=3):
@@ -32,7 +32,7 @@ def find_pivot_by_median_of_2_times_n_plus_1_values(lst, low, high, n=3):
 		for j, y in enumerate(quartiles[i:], i):
 			if lst[y] < lst[x]:
 				lst[x], lst[y] = lst[y], lst[x]
-	return lst[high]
+	return high
 
 
 pivot_functions = [
@@ -60,7 +60,7 @@ def quick_sort(lst, low=0, high=None, min_size=10, pivot_function=find_pivot_by_
 		return insertion(lst)
 	if low < high:
 		p = pivot_function(lst, low, high)
-		partition(lst, low, high, p)
+		partition(lst, low, high, lst[p])
 		quick_sort(lst, low, p - 1)
 		quick_sort(lst, p + 1, high)
 	return lst
