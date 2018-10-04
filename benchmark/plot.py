@@ -3,6 +3,7 @@ from math import log
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def main():
 	with open('results.csv', 'r') as csv_file:
 		reader = csv.reader(csv_file)

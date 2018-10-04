@@ -19,6 +19,6 @@ sorting_algorithms = [
 	insertion,
 	fusion,
 	heap_sort,
-	# quicksort
+	quick_sort
 ]
 

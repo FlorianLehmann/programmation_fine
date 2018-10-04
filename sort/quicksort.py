@@ -1,66 +1,61 @@
-from . import insertion
+from generator import random_array
 
 
-def find_pivot(lst, low, high):
-	return high
+def naive_pivot(lst, low, high):
+    return low
 
 
 def find_pivot_by_median_of_3_values(lst, low, high):
-	mid = low + (high - low) // 2
-	if lst[mid] < lst[low]:
-		lst[low], lst[mid] = lst[mid], lst[low]
-	if lst[high] < lst[low]:
-		lst[low], lst[high] = lst[high], lst[low]
-	if lst[mid] < lst[high]:
-		lst[mid], lst[high] = lst[high], lst[mid]
-	return high
-
-
-def find_pivot_by_median_of_5_values(lst, low, high):
-	quartiles = [low + (high - low) * i // 4 for i in range(5)]
-	for i, x in enumerate(quartiles):
-		for j, y in enumerate(quartiles[i:], i):
-			if lst[y] < lst[x]:
-				lst[x], lst[y] = lst[y], lst[x]
-	return high
-
-
-def find_pivot_by_median_of_2_times_n_plus_1_values(lst, low, high, n=3):
-	m = 2 * n + 1
-	quartiles = [low + (high - low) * i // (m - 1) for i in range(m)]
-	for i, x in enumerate(quartiles):
-		for j, y in enumerate(quartiles[i:], i):
-			if lst[y] < lst[x]:
-				lst[x], lst[y] = lst[y], lst[x]
-	return high
+    mid = low + (high - low) // 2
+    if lst[mid] < lst[low]:
+        if lst[low] < lst[high]:
+            return low
+        if lst[mid] > lst[high]:
+            return mid
+        return high
+    if lst[low] > lst[high]:
+        return low
+    if lst[mid] < lst[high]:
+        return mid
+    return high
 
 
 pivot_functions = [
-	find_pivot,
-	find_pivot_by_median_of_3_values,
-	find_pivot_by_median_of_5_values,
-	find_pivot_by_median_of_2_times_n_plus_1_values
+    naive_pivot,
+    find_pivot_by_median_of_3_values,
 ]
 
 
 def partition(lst, low, high, pivot):
-	i = low
-	for j in range(low, high):
-		if lst[j] < pivot:
-			lst[i], lst[j] = lst[j], lst[i]
-			i += 1
-	lst[i], lst[high] = lst[high], lst[i]
-	return i
+    pointer = low
+    pivot_value = lst[pivot]
+    for i in range(low, high):
+        if lst[i] < pivot_value:
+            if pointer != i:
+                lst[pointer], lst[i] = lst[i], lst[pointer]
+            pointer += 1
+    return pointer
 
 
 def quick_sort(lst, low=0, high=None, min_size=10, pivot_function=find_pivot_by_median_of_3_values):
-	if high is None:
-		high = len(lst) - 1
-	if len(lst) < min_size:
-		return insertion(lst)
-	if low < high:
-		p = pivot_function(lst, low, high)
-		partition(lst, low, high, lst[p])
-		quick_sort(lst, low, p - 1)
-		quick_sort(lst, p + 1, high)
-	return lst
+    if high is None:
+        high = len(lst) - 1
+    if (high - low) < min_size:
+        return insertion(lst, low, high)
+    pivot = pivot_function(lst, low, high)
+    pivot = partition(lst, low, high, pivot)
+    quick_sort(lst, low, pivot - 1)
+    quick_sort(lst, pivot + 1, high)
+    return lst
+
+
+def insertion(numbers, start, end):
+    for i in range(start + 1, end + 1):
+        tmp = i
+        for j in reversed(range(start, i)):
+            if numbers[tmp] >= numbers[j]:
+                break
+            else:
+                numbers[tmp], numbers[j] = numbers[j], numbers[tmp]
+                tmp = tmp - 1
+    return numbers
