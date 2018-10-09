@@ -13,9 +13,9 @@ def find_pivot_by_median_of_3_values(lst, low, high):
         return high
     if lst[low] > lst[high]:
         return low
-    if lst[mid] < lst[high]:
-        return mid
-    return high
+    if lst[mid] > lst[high]:
+        return high
+    return mid
 
 
 pivot_functions = [
