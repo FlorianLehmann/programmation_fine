@@ -24,9 +24,9 @@ def random_squared_array(n, max_value=MAX_INT):
 
 
 def sorted_array(n, max_value=MAX_INT):
-    return sorted(random_array(n, max_value))
+    return list(sorted(random_array(n, max_value)))
 
 
 def reverse_sorted_array(n, max_value=MAX_INT):
-    return reversed(sorted_array(n, max_value))
+    return list(reversed(sorted_array(n, max_value)))
 
