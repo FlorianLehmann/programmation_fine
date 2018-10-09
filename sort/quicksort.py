@@ -1,5 +1,3 @@
-from generator import random_array
-
 
 def naive_pivot(lst, low, high):
     return low
