@@ -1,6 +1,20 @@
+import random
 
-def naive_pivot(lst, low, high):
+
+def always_low_value(lst, low, high):
     return low
+
+
+def always_mid_element(lst, low, high):
+    return (high + low) // 2
+
+
+def always_high_value(lst, low, high):
+    return high
+
+
+def random_pivot(lst, low, high):
+    return random.randrange(low, high + 1)
 
 
 def find_pivot_by_median_of_3_values(lst, low, high):
@@ -190,20 +204,25 @@ def find_pivot_by_median_of_5_values(lst, low, high):
 
 
 pivot_functions = [
-    naive_pivot,
+    always_low_value,
+    always_mid_element,
+    always_high_value,
+    random_pivot,
     find_pivot_by_median_of_3_values,
     find_pivot_by_median_of_5_values
 ]
 
 
 def partition(lst, low, high, pivot):
+    lst[high], lst[pivot] = lst[pivot], lst[high]
+    pivot_value = lst[high]
     pointer = low
-    pivot_value = lst[pivot]
     for i in range(low, high):
-        if lst[i] < pivot_value:
-            if pointer != i:
-                lst[pointer], lst[i] = lst[i], lst[pointer]
+        if (i <= pivot and lst[i] <= pivot_value) or (i > pivot and lst[i] < pivot_value):
+            if i != pointer:
+                lst[i], lst[pointer] = lst[pointer], lst[i]
             pointer += 1
+    lst[pointer], lst[high] = lst[high], lst[pointer]
     return pointer
 
 
@@ -212,10 +231,11 @@ def quick_sort(lst, low=0, high=None, min_size=10, pivot_function=find_pivot_by_
         high = len(lst) - 1
     if (high - low) < min_size:
         return insertion(lst, low, high)
-    pivot = pivot_function(lst, low, high)
-    pivot = partition(lst, low, high, pivot)
-    quick_sort(lst, low, pivot - 1)
-    quick_sort(lst, pivot + 1, high)
+    if low < high:
+        pivot = pivot_function(lst, low, high)
+        pivot = partition(lst, low, high, pivot)
+        quick_sort(lst, low, pivot - 1, min_size, pivot_function)
+        quick_sort(lst, pivot + 1, high, min_size, pivot_function)
     return lst
 
 
