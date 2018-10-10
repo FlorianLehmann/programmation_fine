@@ -15,7 +15,7 @@ def main():
             y = [float(row[str(e)]) for e in x]
             ax.plot(x, y, label=row["data"])
 
-    ax.set_xlabel("taille pour appliqué le tri par insertion (log 2)")
+    ax.set_xlabel("taille pour appliqué le tri par insertion")
     ax.set_ylabel("temps d'execution en secondes")
     ax.set_title('Comparaison des valeurs de seuils pour le tri rapide', size=20)
     ax.legend()
