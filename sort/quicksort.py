@@ -18,9 +18,181 @@ def find_pivot_by_median_of_3_values(lst, low, high):
     return mid
 
 
+def find_pivot_by_median_of_5_values(lst, low, high):
+    q1, mid, q3 = low + (high - low) // 4, low + (high - low) // 2, low + (high - low) * 3 // 4
+    if lst[low] < lst[q1]:
+        if lst[q1] < lst[mid]:
+            if lst[q3] < lst[high]:
+                if lst[high] < lst[mid]:
+                    if lst[high] > lst[q1]:
+                        if lst[q3] > lst[q1]:
+                            return q3
+                        return q1
+                    if lst[high] > lst[low]:
+                        return high
+                    return low
+                if lst[mid] < lst[q3]:
+                    return mid
+                if lst[q3] > lst[q1]:
+                    return q3
+                return q1
+            if lst[q3] < lst[mid]:
+                if lst[q3] > lst[q1]:
+                    if lst[high] > lst[q1]:
+                        return high
+                    return q1
+                if lst[q3] > lst[low]:
+                    return q3
+                return low
+            if lst[mid] < lst[high]:
+                return mid
+            if lst[high] > lst[q1]:
+                return high
+            return q1
+        if lst[mid] > lst[low]:
+            if lst[q3] < lst[high]:
+                if lst[high] < lst[q1]:
+                    if lst[high] > lst[mid]:
+                        if lst[q3] > lst[mid]:
+                            return q3
+                        return mid
+                    if lst[high] > lst[low]:
+                        return high
+                    return low
+                if lst[q1] < lst[q3]:
+                    return q1
+                if lst[q3] > lst[mid]:
+                    return q3
+                return mid
+            if lst[q3] < lst[q1]:
+                if lst[q3] > lst[mid]:
+                    if lst[high] > lst[mid]:
+                        return high
+                    return mid
+                if lst[q3] > lst[low]:
+                    return q3
+                return low
+            if lst[q1] < lst[high]:
+                return q1
+            if lst[high] > lst[mid]:
+                return high
+            return mid
+        if lst[q3] < lst[high]:
+            if lst[high] < lst[q1]:
+                if lst[high] > lst[low]:
+                    if lst[q3] > lst[low]:
+                        return q3
+                    return low
+                if lst[high] > lst[mid]:
+                    return high
+                return mid
+            if lst[q1] < lst[q3]:
+                return q1
+            if lst[q3] > lst[low]:
+                return q3
+            return low
+        if lst[q3] < lst[q1]:
+            if lst[q3] > lst[low]:
+                if lst[high] > lst[low]:
+                    return high
+                return low
+            if lst[q3] > lst[mid]:
+                return q3
+            return mid
+        if lst[q1] < lst[high]:
+            return q1
+        if lst[high] > lst[low]:
+            return high
+        return low
+    if lst[low] < lst[mid]:
+        if lst[q3] < lst[high]:
+            if lst[high] < lst[mid]:
+                if lst[high] > lst[low]:
+                    if lst[q3] > lst[low]:
+                        return q3
+                    return low
+                if lst[high] > lst[q1]:
+                    return high
+                return q1
+            if lst[mid] < lst[q3]:
+                return mid
+            if lst[q3] > lst[low]:
+                return q3
+            return low
+        if lst[q3] < lst[mid]:
+            if lst[q3] > lst[low]:
+                if lst[high] > lst[low]:
+                    return high
+                return low
+            if lst[q3] > lst[q1]:
+                return q3
+            return q1
+        if lst[mid] < lst[high]:
+            return mid
+        if lst[high] > lst[low]:
+            return high
+        return low
+    if lst[mid] > lst[q1]:
+        if lst[q3] < lst[high]:
+            if lst[high] < lst[low]:
+                if lst[high] > lst[mid]:
+                    if lst[q3] > lst[mid]:
+                        return q3
+                    return mid
+                if lst[high] > lst[q1]:
+                    return high
+                return q1
+            if lst[low] < lst[q3]:
+                return low
+            if lst[q3] > lst[mid]:
+                return q3
+            return mid
+        if lst[q3] < lst[low]:
+            if lst[q3] > lst[mid]:
+                if lst[high] > lst[mid]:
+                    return high
+                return mid
+            if lst[q3] > lst[q1]:
+                return q3
+            return q1
+        if lst[low] < lst[high]:
+            return low
+        if lst[high] > lst[mid]:
+            return high
+        return mid
+    if lst[q3] < lst[high]:
+        if lst[high] < lst[low]:
+            if lst[high] > lst[q1]:
+                if lst[q3] > lst[q1]:
+                    return q3
+                return q1
+            if lst[high] > lst[mid]:
+                return high
+            return mid
+        if lst[low] < lst[q3]:
+            return low
+        if lst[q3] > lst[q1]:
+            return q3
+        return q1
+    if lst[q3] < lst[low]:
+        if lst[q3] > lst[q1]:
+            if lst[high] > lst[q1]:
+                return high
+            return q1
+        if lst[q3] > lst[mid]:
+            return q3
+        return mid
+    if lst[low] < lst[high]:
+        return low
+    if lst[high] > lst[q1]:
+        return high
+    return q1
+
+
 pivot_functions = [
     naive_pivot,
     find_pivot_by_median_of_3_values,
+    find_pivot_by_median_of_5_values
 ]
 
 
